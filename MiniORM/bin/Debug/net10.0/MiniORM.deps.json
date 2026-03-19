@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MiniORM/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite.Core": "11.0.0-preview.2.26159.112"
+        },
+        "runtime": {
+          "MiniORM.dll": {}
+        }
+      },
+      "Microsoft.Data.Sqlite.Core/11.0.0-preview.2.26159.112": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "3.0.2"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Data.Sqlite.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.16012"
+          }
+        }
+      },
+      "SQLitePCLRaw.core/3.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
+            "assemblyVersion": "3.0.2.2801",
+            "fileVersion": "3.0.2.2801"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MiniORM/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Data.Sqlite.Core/11.0.0-preview.2.26159.112": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3FPM9ynRN59nVrVmoFLqY8eRA6Tl4Ae56SzSDqtlOudgRJuhAMoEHEPRdIIMuMqwk44AjLDPG1NMDAdkIMQWpg==",
+      "path": "microsoft.data.sqlite.core/11.0.0-preview.2.26159.112",
+      "hashPath": "microsoft.data.sqlite.core.11.0.0-preview.2.26159.112.nupkg.sha512"
+    },
+    "SQLitePCLRaw.core/3.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tnbRf0muOOSJK1RLCfyYK13jynFScgL4xMj7yC3oy8lrrGKXTKmOoWjfdV+cFfBRdppm4qST31hvp8ihgIgvMQ==",
+      "path": "sqlitepclraw.core/3.0.2",
+      "hashPath": "sqlitepclraw.core.3.0.2.nupkg.sha512"
+    }
+  }
+}

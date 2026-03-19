@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniORM", "MiniORM\MiniORM.csproj", "{38E52B18-EAFF-4932-9097-E31C5370D3D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{7A3B9A33-E9FA-471B-B686-A3E0C3DCB705}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38E52B18-EAFF-4932-9097-E31C5370D3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E52B18-EAFF-4932-9097-E31C5370D3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E52B18-EAFF-4932-9097-E31C5370D3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E52B18-EAFF-4932-9097-E31C5370D3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A3B9A33-E9FA-471B-B686-A3E0C3DCB705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3B9A33-E9FA-471B-B686-A3E0C3DCB705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3B9A33-E9FA-471B-B686-A3E0C3DCB705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A3B9A33-E9FA-471B-B686-A3E0C3DCB705}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
