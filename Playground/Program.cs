@@ -11,6 +11,8 @@ SQLitePCL.Batteries.Init();
 
 var connectionString = "Data Source=miniorm.db";
 
+var expressionParser = new ExpressionParser();
+
 InitializeDatabase(connectionString);
 
 var context = new OrmContext(connectionString, cs => new DbExecutor(cs));
@@ -19,9 +21,13 @@ Expression<Func<User, bool>> expr1 = x => x.Id > 2;
 Expression<Func<User, bool>> expr2 = x => x.FirstName == "Ali";
 Expression<Func<User, bool>> expr3 = x => x.Id > 0 && x.FirstName == "Ali";
 
-var expr1Res = context.Query<User>($"SELECT * FROM Users WHERE {ExpressionParser.Parse(expr1.Body)}");
-var expr2Res = context.Query<User>($"SELECT * FROM Users WHERE {ExpressionParser.Parse(expr2.Body)}");
-var expr3Res = context.Query<User>($"SELECT * FROM Users WHERE {ExpressionParser.Parse(expr3.Body)}");
+var expr1Parsed = expressionParser.Parse(expr1.Body);
+var expr2Parsed = expressionParser.Parse(expr2.Body);
+var expr3Parsed = expressionParser.Parse(expr3.Body);
+
+var expr1Res = context.Query<User>($"SELECT * FROM Users WHERE {expr1Parsed.Sql}", parameters: expr1Parsed.Parameters);
+var expr2Res = context.Query<User>($"SELECT * FROM Users WHERE {expr2Parsed.Sql}", parameters: expr2Parsed.Parameters);
+var expr3Res = context.Query<User>($"SELECT * FROM Users WHERE {expr3Parsed.Sql}", parameters: expr3Parsed.Parameters);
 
 Console.WriteLine($"EXPRESSION 1 ::: ");
 foreach (var user in expr1Res)

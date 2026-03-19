@@ -51,3 +51,4 @@ D:\Projects\MiniORM\Playground\bin\Debug\net10.0\runtimes\osx-x64\native\libe_sq
 D:\Projects\MiniORM\Playground\bin\Debug\net10.0\runtimes\win-arm64\native\e_sqlite3.dll
 D:\Projects\MiniORM\Playground\bin\Debug\net10.0\runtimes\win-x64\native\e_sqlite3.dll
 D:\Projects\MiniORM\Playground\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
+D:\Projects\MiniORM\Playground\obj\Debug\net10.0\Playground.sourcelink.json

@@ -1,21 +1,39 @@
-﻿using System.Linq.Expressions;
+﻿using System.Data;
+using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Metadata;
 using MiniORM.Helpers;
 
 namespace MiniORM.Query.ExpressionParser;
 
-public static class ExpressionParser
+public class ExpressionParser
 {
-    public static string Parse(Expression expression)
+    private int _parameterIndex;
+    private Dictionary<string, object?> _parameters = new();
+
+    public SqlResult Parse(Expression expression)
+    {
+        _parameterIndex = 0;
+        _parameters = new Dictionary<string, object?>();
+
+        var sql = ParseInternal(expression);
+
+        return new SqlResult()
+        {
+            Sql = sql,
+            Parameters = _parameters,
+        };
+    }
+
+    private string ParseInternal(Expression expression)
     {
         if (expression is BinaryExpression binary)
         {
-            var columnName = Parse(binary.Left);
-            var right = Parse(binary.Right);
+            var left = ParseInternal(binary.Left);
+            var right = ParseInternal(binary.Right);
             var op = ExpressionParsingHelperMethods.GetSqlOperator(binary.NodeType);
 
-            return $"({columnName} {op} {right})";
+            // Console.WriteLine( $"({left} {op} {right})");
+            return $"({left} {op} {right})";
         }
 
         if (expression is MemberExpression member)
@@ -28,30 +46,32 @@ public static class ExpressionParser
             return ParseConstant(constant);
         }
 
-        else
-        {
-            throw new Exception($"EXPECTED BINARY EXPRESSION GOT {expression.Type}");
-        }
+        throw new Exception($"Expression type '{{expression.GetType().Name}}' is not supported.\"");
     }
 
-
-    private static string ParseMember(MemberExpression expression)
+    private string ParseMember(MemberExpression expression)
     {
-        if (expression.Member is not PropertyInfo property)
-        {
-            throw new NotSupportedException($"{expression.Member.Name} is not property");
-        }
+        if (expression.Expression is not ParameterExpression parameter)
+            throw new NotSupportedException("");
 
-        return EntityMetaDataHelper.GetColumnName(property);
+        return expression.Member is not PropertyInfo property
+            ? throw new NotSupportedException($"{expression.Member.Name} is not property")
+            : EntityMetaDataHelper.GetColumnName(property);
     }
 
-    private static string ParseConstant(ConstantExpression expression)
+    private string ParseConstant(ConstantExpression expression)
     {
-        return expression.Value switch
-        {
-            string str => $"'{str}'",
-            bool b => b ? "1" : "0",
-            _ => expression.Value?.ToString() ?? "NULL"
-        };
+        if (expression.Value is null)
+            throw new NoNullAllowedException(
+                $"{expression.Value} is [NULL], need to be fixed for supporting null values");
+        return CreateParamName(expression.Value);
+    }
+
+    private string CreateParamName(object? obj)
+    {
+        var paramName = $"p{_parameterIndex++}";
+        _parameters.Add(paramName, obj);
+
+        return "@" + paramName;
     }
 }
