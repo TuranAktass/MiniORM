@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using MiniORM.Helpers;
 using MiniORM.Infrastructure;
+using MiniORM.Query.Constants;
 using MiniORM.Query.ExpressionParser;
 using MiniORM.Query.SqlBuilder;
 
@@ -31,6 +32,22 @@ public class OrmContext
         return executor.Query<T>(query.Sql, query.Parameters);
     }
 
+    public List<T> OrderBy<T>(Expression<Func<T, object>> expression) where T : new()
+    {
+        var executor = _executorFactory(_connectionString);
+        var query = OrderBySqlBuilder.Build(expression);
+
+        return executor.Query<T>(query.Sql, query.Parameters);
+    }
+
+    public List<T> OrderByDescending<T>(Expression<Func<T, object>> expression) where T : new()
+    {
+        var executor = _executorFactory(_connectionString);
+        var query = OrderBySqlBuilder.Build(expression, OrderByType.DESC);
+
+        return executor.Query<T>(query.Sql, query.Parameters);
+    }
+
     public T? FirstOrDefault<T>(Expression<Func<T, bool>> expression) where T : new()
     {
         var executor = _executorFactory(_connectionString);
@@ -45,7 +62,7 @@ public class OrmContext
         return executor.Execute(sql, parameters);
     }
 
-    public int Insert<T>(T entity) 
+    public int Insert<T>(T entity)
     {
         var executor = _executorFactory(_connectionString);
         var sql = MiniORM.Query.Insert.BuildInsertSql<T>();

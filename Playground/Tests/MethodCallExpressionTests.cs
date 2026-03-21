@@ -1,6 +1,6 @@
 ﻿using MiniORM.Core;
 
-namespace Playground;
+namespace Playground.Tests;
 
 public static class MethodCallExpressionTests
 {

@@ -16,11 +16,11 @@ public static class ExpressionParsingHelperMethods
             ExpressionType.LessThanOrEqual => "<=",
             ExpressionType.AndAlso => "AND",
             ExpressionType.OrElse => "OR",
-            
+
             _ => throw new ArgumentOutOfRangeException(nameof(nodeType), nodeType, null)
         };
     }
-    
+
     public static object? GetValue(Expression expression)
     {
         if (expression is ConstantExpression constant)
@@ -28,4 +28,10 @@ public static class ExpressionParsingHelperMethods
 
         return Expression.Lambda(expression).Compile().DynamicInvoke();
     }
+
+    // public static string GetColumnName(Expression expression)
+    // {
+    //     if (expression.NodeType == ExpressionType.Convert convert){
+    //     }
+    // }
 }
