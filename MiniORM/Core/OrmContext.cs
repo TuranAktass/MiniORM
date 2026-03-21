@@ -1,5 +1,8 @@
-﻿using MiniORM.Helpers;
+﻿using System.Linq.Expressions;
+using MiniORM.Helpers;
 using MiniORM.Infrastructure;
+using MiniORM.Query.ExpressionParser;
+using MiniORM.Query.SqlBuilder;
 
 namespace MiniORM.Core;
 
@@ -20,13 +23,29 @@ public class OrmContext
         return executor.Query<T>(sql, parameters);
     }
 
+    public List<T> Where<T>(Expression<Func<T, bool>> expression) where T : new()
+    {
+        var executor = _executorFactory(_connectionString);
+        var query = WhereSqlBuilder.Build(expression);
+
+        return executor.Query<T>(query.Sql, query.Parameters);
+    }
+
+    public T? FirstOrDefault<T>(Expression<Func<T, bool>> expression) where T : new()
+    {
+        var executor = _executorFactory(_connectionString);
+        var query = FirstOrDefaultSqlBuilder.Build(expression);
+
+        return executor.Query<T>(query.Sql, query.Parameters).FirstOrDefault();
+    }
+
     public int Execute(string sql, object? parameters = null)
     {
         var executor = _executorFactory(_connectionString);
         return executor.Execute(sql, parameters);
     }
 
-    public int Insert<T>(T entity)
+    public int Insert<T>(T entity) 
     {
         var executor = _executorFactory(_connectionString);
         var sql = MiniORM.Query.Insert.BuildInsertSql<T>();
