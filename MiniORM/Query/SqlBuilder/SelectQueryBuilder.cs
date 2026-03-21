@@ -29,7 +29,6 @@ public static class SelectQueryBuilder
             sql += $" OFFSET {model.Offset.Value}";
         }
 
-        Console.WriteLine("[SQL]" + sql);
         return new SqlResult
         {
             Sql = sql,

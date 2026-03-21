@@ -1,9 +1,6 @@
-﻿using System.Linq.Expressions;
-using MiniORM.Core;
-using Microsoft.Data.Sqlite;
+﻿using MiniORM.Core;
 using MiniORM.Infrastructure;
-using MiniORM.Query.ExpressionParser;
-using Playground;
+using MiniORM.Logging;
 using Playground.Tests;
 
 
