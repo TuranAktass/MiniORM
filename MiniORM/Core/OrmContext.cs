@@ -2,8 +2,6 @@
 using MiniORM.Helpers;
 using MiniORM.Infrastructure;
 using MiniORM.Query.Constants;
-using MiniORM.Query.ExpressionParser;
-using MiniORM.Query.SqlBuilder;
 
 namespace MiniORM.Core;
 
@@ -18,43 +16,17 @@ public class OrmContext
         _executorFactory = executorFactory;
     }
 
+    public QuerySet<T> Queryable<T>() where T : new()
+    {
+        return new QuerySet<T>(_connectionString, _executorFactory);
+    }
+
     public List<T> Query<T>(string sql, object? parameters = null) where T : new()
     {
         var executor = _executorFactory(_connectionString);
         return executor.Query<T>(sql, parameters);
     }
 
-    public List<T> Where<T>(Expression<Func<T, bool>> expression) where T : new()
-    {
-        var executor = _executorFactory(_connectionString);
-        var query = WhereSqlBuilder.Build(expression);
-
-        return executor.Query<T>(query.Sql, query.Parameters);
-    }
-
-    public List<T> OrderBy<T>(Expression<Func<T, object>> expression) where T : new()
-    {
-        var executor = _executorFactory(_connectionString);
-        var query = OrderBySqlBuilder.Build(expression);
-
-        return executor.Query<T>(query.Sql, query.Parameters);
-    }
-
-    public List<T> OrderByDescending<T>(Expression<Func<T, object>> expression) where T : new()
-    {
-        var executor = _executorFactory(_connectionString);
-        var query = OrderBySqlBuilder.Build(expression, OrderByType.DESC);
-
-        return executor.Query<T>(query.Sql, query.Parameters);
-    }
-
-    public T? FirstOrDefault<T>(Expression<Func<T, bool>> expression) where T : new()
-    {
-        var executor = _executorFactory(_connectionString);
-        var query = FirstOrDefaultSqlBuilder.Build(expression);
-
-        return executor.Query<T>(query.Sql, query.Parameters).FirstOrDefault();
-    }
 
     public int Execute(string sql, object? parameters = null)
     {

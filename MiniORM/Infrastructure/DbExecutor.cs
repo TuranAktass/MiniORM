@@ -36,6 +36,24 @@ public class DbExecutor
         return result;
     }
 
+    public TResult? ExecuteScalar<TResult>(string sql, object? parameters = null)
+    {
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        using var command = connection.CreateCommand();
+        command.CommandText = sql;
+
+        AddParameters(command, parameters);
+
+        var result = command.ExecuteScalar();
+
+        if (result is null || result == DBNull.Value)
+            return default;
+
+        return (TResult)Convert.ChangeType(result, typeof(TResult));
+    }
+
     public int Execute(string sql, object? parameters = null)
     {
         using var connection = CreateConnection();

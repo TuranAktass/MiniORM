@@ -2,19 +2,21 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using MiniORM.Helpers;
+using MiniORM.Query.Context;
 
 namespace MiniORM.Query.ExpressionParser;
 
 public class SqlExpressionParser
 {
-    private int _parameterIndex;
-    private Dictionary<string, object?> _parameters = new();
+    private readonly QueryContext _queryContext;
+
+    public SqlExpressionParser(QueryContext queryContext)
+    {
+        _queryContext = queryContext;
+    }
 
     public SqlResult Parse(Expression expression)
     {
-        _parameterIndex = 0;
-        _parameters = new Dictionary<string, object?>();
-
         expression = NormalizeBooleanExpression(expression);
 
         var sql = ParseInternal(expression);
@@ -22,7 +24,7 @@ public class SqlExpressionParser
         return new SqlResult()
         {
             Sql = sql,
-            Parameters = _parameters,
+            Parameters = _queryContext.Parameters,
         };
     }
 
@@ -154,8 +156,8 @@ public class SqlExpressionParser
 
     private string CreateParamName(object? obj)
     {
-        var paramName = $"p{_parameterIndex++}";
-        _parameters.Add(paramName, obj);
+        var paramName = $"p{_queryContext.ParameterIndex++}";
+        _queryContext.Parameters.Add(paramName, obj);
 
         return "@" + paramName;
     }

@@ -15,6 +15,4 @@ var connectionString = "Data Source=miniorm.db";
 
 var context = new OrmContext(connectionString, cs => new DbExecutor(cs));
 
-
-
-OrderByTests.Run(context);
+CountTest.Run(context);
