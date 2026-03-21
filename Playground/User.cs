@@ -12,12 +12,12 @@ public class User
     [Column("LastName")] public string? LastName { get; set; }
 
     [Column("Email")] public string Email { get; set; } = "";
-    
+
     [Column("IsActive")] public bool IsActive { get; set; }
 
 
     public override string ToString()
     {
-        return $"{Id} | {FirstName} {LastName} | {Email}";
+        return $"{Id} | {FirstName} {LastName} | {Email} | {IsActive}";
     }
 }

@@ -43,6 +43,11 @@ public class SqlExpressionParser
             return ParseConstant(constant);
         }
 
+        if (expression is MethodCallExpression methodCall)
+        {
+            return ParseMethodCall(methodCall);
+        }
+
         if (expression is UnaryExpression unary)
         {
             return ParseUnary(unary);
@@ -78,6 +83,35 @@ public class SqlExpressionParser
         var op = ExpressionParsingHelperMethods.GetSqlOperator(binary.NodeType);
 
         return $"({leftSql} {op} {rightSql})";
+    }
+
+    private string ParseMethodCall(MethodCallExpression methodCall)
+    {
+        if (methodCall.Method.Name == nameof(string.Contains))
+        {
+            var member = ParseInternal(methodCall.Object!);
+            var value = ExpressionParsingHelperMethods.GetValue(methodCall.Arguments[0]);
+            var param = CreateParamName($"%{value}%");
+            return $"({member} LIKE {param})";
+        }
+
+        if (methodCall.Method.Name == nameof(string.StartsWith))
+        {
+            var member = ParseInternal(methodCall.Object!);
+            var value = ExpressionParsingHelperMethods.GetValue(methodCall.Arguments[0]);
+            var param = CreateParamName($"{value}%");
+            return $"({member} LIKE {param})";
+        }
+
+        if (methodCall.Method.Name == nameof(string.EndsWith))
+        {
+            var member = ParseInternal(methodCall.Object!);
+            var value = ExpressionParsingHelperMethods.GetValue(methodCall.Arguments[0]);
+            var param = CreateParamName($"%{value}");
+            return $"({member} LIKE {param})";
+        }
+
+        throw new Exception($"Method {methodCall.Method.Name} is not supported.");
     }
 
     private string ParseMember(MemberExpression expression)

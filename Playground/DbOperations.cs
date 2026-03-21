@@ -3,7 +3,7 @@ using MiniORM.Core;
 
 namespace Playground;
 
-public static class Seeder
+public static class DbOperations
 {
     public static void DropTables(OrmContext context)
     {
@@ -17,10 +17,6 @@ public static class Seeder
 
     public static void Seed(OrmContext context)
     {
-        //delete db when needed
-        // 
-        //
-
         var users = new List<User>
         {
             new User

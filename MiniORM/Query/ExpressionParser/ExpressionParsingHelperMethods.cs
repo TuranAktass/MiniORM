@@ -20,4 +20,12 @@ public static class ExpressionParsingHelperMethods
             _ => throw new ArgumentOutOfRangeException(nameof(nodeType), nodeType, null)
         };
     }
+    
+    public static object? GetValue(Expression expression)
+    {
+        if (expression is ConstantExpression constant)
+            return constant.Value;
+
+        return Expression.Lambda(expression).Compile().DynamicInvoke();
+    }
 }
