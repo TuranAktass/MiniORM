@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System.Data;
+using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using MiniORM.Logging;
 using MiniORM.Materialization;
@@ -7,7 +8,8 @@ namespace MiniORM.Infrastructure;
 
 public class DbExecutor
 {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
+    private readonly DbConnection? _connection;
     private readonly IOrmLogger _logger;
 
     public DbExecutor(string connectionString)
@@ -16,16 +18,25 @@ public class DbExecutor
         _logger = new ConsoleOrmLogger();
     }
 
+    public DbExecutor(DbConnection connection)
+    {
+        _connection = connection;
+        _logger = new ConsoleOrmLogger();
+    }
+
     public List<T> Query<T>(string sql, object? parameters = null) where T : new()
     {
         var start = DateTime.UtcNow;
+
+        bool shouldDispose;
+        var connection = CreateConnection(out shouldDispose);
 
         try
         {
             _logger.LogCommand(sql, parameters);
 
-            using var connection = CreateConnection();
-            connection.Open();
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
 
             using var command = connection.CreateCommand();
             command.CommandText = sql;
@@ -52,18 +63,25 @@ public class DbExecutor
             _logger.LogError(sql, ex);
             throw;
         }
+        finally
+        {
+            if (shouldDispose)
+                connection.Dispose();
+        }
     }
 
     public TResult? ExecuteScalar<TResult>(string sql, object? parameters = null)
     {
         var start = DateTime.UtcNow;
+        bool shouldDispose;
+        var connection = CreateConnection(out shouldDispose);
 
         try
         {
             _logger.LogCommand(sql, parameters);
 
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
 
             using var command = connection.CreateCommand();
             command.CommandText = sql;
@@ -85,18 +103,25 @@ public class DbExecutor
             _logger.LogError(sql, ex);
             throw;
         }
+        finally
+        {
+            if (shouldDispose)
+                connection.Dispose();
+        }
     }
 
     public int Execute(string sql, object? parameters = null)
     {
         var start = DateTime.UtcNow;
+        bool shouldDispose;
+        var connection = CreateConnection(out shouldDispose);
 
         try
         {
             _logger.LogCommand(sql, parameters);
 
-            using var connection = CreateConnection();
-            connection.Open();
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
 
             using var command = connection.CreateCommand();
             command.CommandText = sql;
@@ -112,6 +137,11 @@ public class DbExecutor
         {
             _logger.LogError(sql, ex);
             throw;
+        }
+        finally
+        {
+            if (shouldDispose)
+                connection.Dispose();
         }
     }
 
@@ -148,8 +178,15 @@ public class DbExecutor
         }
     }
 
-    private DbConnection CreateConnection()
+    private DbConnection CreateConnection(out bool shouldDispose)
     {
+        if (_connection != null)
+        {
+            shouldDispose = false;
+            return _connection;
+        }
+
+        shouldDispose = true;
         return new SqliteConnection(_connectionString);
     }
 }

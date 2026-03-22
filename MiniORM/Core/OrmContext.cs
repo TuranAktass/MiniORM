@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using MiniORM.Helpers;
 using MiniORM.Infrastructure;
-using MiniORM.Query.Constants;
+using MiniORM.Query;
 
 namespace MiniORM.Core;
 

@@ -1,14 +1,12 @@
 ﻿using System.Linq.Expressions;
 using MiniORM.Helpers;
 using MiniORM.Infrastructure;
-using MiniORM.Query;
-using MiniORM.Query.Constants;
 using MiniORM.Query.Context;
 using MiniORM.Query.ExpressionParser;
 using MiniORM.Query.Model;
 using MiniORM.Query.SqlBuilder;
 
-namespace MiniORM.Core;
+namespace MiniORM.Query;
 
 public class QuerySet<T> where T : new()
 {
