@@ -62,6 +62,30 @@ context.Insert(new User
     IsActive = true
 }); 
 ```
+### Update
+```csharp
+context.Update(new User
+{
+    Id = 1,
+    FirstName = "Ali",
+    LastName = "Yılmaz",
+    Email = "ali@test.com",
+    IsActive = true
+}); 
+```
+
+### Insert
+```csharp
+context.Insert(new User
+{
+    Id = 1,
+    FirstName = "Ali",
+    LastName = "Yılmaz",
+    Email = "ali@test.com",
+    IsActive = true
+}); 
+```
+
 ### Query 
 
 ```csharp 
