@@ -74,18 +74,6 @@ context.Update(new User
 }); 
 ```
 
-### Insert
-```csharp
-context.Insert(new User
-{
-    Id = 1,
-    FirstName = "Ali",
-    LastName = "Yılmaz",
-    Email = "ali@test.com",
-    IsActive = true
-}); 
-```
-
 ### Query 
 
 ```csharp 
