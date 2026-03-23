@@ -5,6 +5,14 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=439e4d43_002De57f_002D4fc8_002Da26f_002D4d950ca9f762/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="QuerySetIntegrationTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Query.QuerySetIntegrationTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Command.CommandIntegrationTest.Where_IsActive_ReturnsOnlyActiveUsers&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Command.CommandIntegrationTest.DataUpdatedInDb_AfterUpdate&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Command.CommandIntegrationTest.Update_ChangesExistingUserInDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Command.CommandIntegrationTest.Insert_PersistsUserInDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A166D9A5-80F9-45D2-A9CE-AC90EA0FB2FB::net10.0::MiniORM.IntegrationTests.Command.CommandIntegrationTest.Delete_RemovesExistingUserFromDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.InsertTest.Insert_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.UpdateTest.Update_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.DeleteTest.Delete_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
