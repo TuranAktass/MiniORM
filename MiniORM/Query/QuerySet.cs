@@ -46,6 +46,14 @@ public class QuerySet<T> where T : new()
 
         return this;
     }
+    
+    public QuerySet<T> ThenBy(Expression<Func<T, object>> expression)
+    {
+        var orderByClause = OrderByExpressionParser.Parse(expression);
+        _queryModel.OrderByClauses.Add($"{orderByClause}");
+
+        return this;
+    }
 
     public QuerySet<T> OrderByDescending(Expression<Func<T, object>> expression)
     {

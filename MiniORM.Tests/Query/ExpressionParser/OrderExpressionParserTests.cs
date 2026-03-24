@@ -25,4 +25,14 @@ public class OrderExpressionParserTests
         var result = OrderByExpressionParser.Parse(expression);
         Assert.Equal("Id", result);
     }
+    
+    
+    [Fact]
+    public void ThenByParse_IntPropertyWrappedInConvert_ReturnsColumnName()
+    {
+        Expression<Func<User, object>> expression = x => x.Id;
+
+        var result = OrderByExpressionParser.Parse(expression);
+        Assert.Equal("Id", result);
+    }
 }

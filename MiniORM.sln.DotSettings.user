@@ -13,6 +13,7 @@
     &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.InsertTest.Insert_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.UpdateTest.Update_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Command.Methods.DeleteTest.Delete_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::D586D517-62B5-487B-8871-27040C499895::net10.0::MiniORM.Tests.Query.SqlBuilder.SelectQueryBuilderTests.Build_WithWhereOrderByThenByLimitOffset_ReturnsCorrectSql&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

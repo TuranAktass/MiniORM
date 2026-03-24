@@ -92,4 +92,21 @@ public class QuerySetIntegrationTests
 
         Assert.Equal(1, result.Count);
     }
+
+    [Fact]
+    public void OrderByAndThenBy_ReturnsUsersInCorrectOrder()
+    {
+        var context = TestDbContextFactory.Create();
+
+        var result = context.Queryable<User>()
+            .Where(x => x.IsActive)
+            .OrderBy(x => x.Id).ThenBy(x => x.FirstName).ToList();
+
+        var expected = result
+            .OrderBy(x => x.Id)
+            .ThenBy(x => x.FirstName)
+            .ToList();
+
+        Assert.True(result.SequenceEqual(expected));
+    }
 }
