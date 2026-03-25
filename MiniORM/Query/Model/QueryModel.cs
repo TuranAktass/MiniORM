@@ -4,7 +4,8 @@ public class QueryModel
 {
     public string TableName { get; set; } = string.Empty;
 
-    public string SelectClause { get; set; } = "*";
+    public List<string> SelectClause { get; set; } = [];
+
     public List<string> WhereClauses { get; set; } = [];
     public List<string> OrderByClauses { get; set; } = [];
     public Dictionary<string, object?> Parameters = new();

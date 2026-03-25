@@ -13,4 +13,4 @@ var connectionString = "Data Source=miniorm.db";
 
 var context = new OrmContext(connectionString, cs => new DbExecutor(cs));
 
-ThenByTest.Run(context);
+ProjectionTests.Run(context);

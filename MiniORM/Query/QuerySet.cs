@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using MiniORM.Helpers;
 using MiniORM.Infrastructure;
+using MiniORM.Logging;
 using MiniORM.Query.Context;
 using MiniORM.Query.ExpressionParser;
 using MiniORM.Query.Model;
@@ -14,11 +15,13 @@ public class QuerySet<T> where T : new()
     private readonly Func<string, DbExecutor> _executorFactory;
     private readonly QueryModel _queryModel;
     private readonly QueryContext _parameterContext;
+    private readonly IOrmLogger _logger;
 
     public QuerySet(string connectionString, Func<string, DbExecutor> executorFactory)
     {
         _connectionString = connectionString;
         _executorFactory = executorFactory;
+        _logger = new ConsoleOrmLogger();
 
         _parameterContext = new QueryContext();
 
@@ -26,6 +29,14 @@ public class QuerySet<T> where T : new()
         {
             TableName = EntityMetaDataHelper.GetTableName(typeof(T))
         };
+    }
+
+    public QuerySet<T> Select(Expression<Func<T, object>> expression)
+    {
+        var parsed = SelectExpressionParser.Parse(expression);
+        _queryModel.SelectClause = parsed;
+
+        return this;
     }
 
     public QuerySet<T> Where(Expression<Func<T, bool>> expression)
@@ -46,7 +57,7 @@ public class QuerySet<T> where T : new()
 
         return this;
     }
-    
+
     public QuerySet<T> ThenBy(Expression<Func<T, object>> expression)
     {
         var orderByClause = OrderByExpressionParser.Parse(expression);
@@ -108,7 +119,7 @@ public class QuerySet<T> where T : new()
     public int Count()
     {
         var queryModel = _queryModel.Clone();
-        queryModel.SelectClause = "COUNT(*)";
+        queryModel.SelectClause = ["COUNT(*)"];
 
         var sqlResult = SelectQueryBuilder.Build(queryModel);
         var executor = _executorFactory(_connectionString);

@@ -109,4 +109,17 @@ public class QuerySetIntegrationTests
 
         Assert.True(result.SequenceEqual(expected));
     }
+
+    [Fact]
+    public void SelectWithProjection_ReturnsDataCorrectly()
+    {
+        var context = TestDbContextFactory.Create();
+
+        var result = context.Queryable<User>()
+            .Where(x => x.IsActive)
+            .Select(x => new { x.Id, x.FirstName })
+            .ToList();
+
+        Assert.NotEmpty(result);
+    }
 }

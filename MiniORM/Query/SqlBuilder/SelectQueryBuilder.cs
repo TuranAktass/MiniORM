@@ -7,7 +7,8 @@ public static class SelectQueryBuilder
 {
     public static SqlResult Build(QueryModel model)
     {
-        var sql = $"SELECT {model.SelectClause} FROM {model.TableName}";
+        var selectClause = model.SelectClause.Count == 0 ? "*" : string.Join(", ", model.SelectClause);
+        var sql = $"SELECT {selectClause} FROM {model.TableName}";
 
         if (model.WhereClauses.Any())
         {
