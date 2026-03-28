@@ -15,9 +15,11 @@ public class User
 
     [Column("IsActive")] public bool IsActive { get; set; }
 
+    [Column("PhoneNumber")] public string Phone { get; set; }
+
 
     public override string ToString()
     {
-        return $"{Id} | {FirstName} {LastName} | {Email} | {IsActive}";
+        return $"{Id} | {FirstName} {LastName} | {Phone} | {Email} | {IsActive}";
     }
 }

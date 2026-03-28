@@ -34,7 +34,7 @@ public class QuerySet<T> where T : new()
     public QuerySet<T> Select(Expression<Func<T, object>> expression)
     {
         var parsed = SelectExpressionParser.Parse(expression);
-        _queryModel.SelectClause = parsed;
+        _queryModel.BuildSelectClause(parsed);
 
         return this;
     }

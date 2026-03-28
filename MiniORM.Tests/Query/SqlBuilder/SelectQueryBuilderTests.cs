@@ -76,4 +76,6 @@ public class SelectQueryBuilderTests
         Assert.Single(result.Parameters);
         Assert.Equal(true, result.Parameters["p0"]);
     }
+
+    
 }

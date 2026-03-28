@@ -24,35 +24,36 @@ public static class DbOperations
                 FirstName = "Ali",
                 LastName = "Yılmaz",
                 Email = "ali@example.com",
-                IsActive = true
+                IsActive = true,
+                Phone = "5554443322"
             },
             new User
             {
                 FirstName = "Veli",
                 LastName = "Kaya",
                 Email = "veli@example.com",
-                IsActive = true
+                IsActive = true, Phone = "4444443322"
             },
             new User
             {
                 FirstName = "Ayşe",
                 LastName = "Demir",
                 Email = "ayse@example.com",
-                IsActive = false
+                IsActive = false, Phone = "3334443322"
             },
             new User
             {
                 FirstName = "Fatma",
-                LastName = null, // NULL test
+                LastName = null,
                 Email = "fatma@example.com",
-                IsActive = true
+                IsActive = true, Phone = "2224443322"
             },
             new User
             {
                 FirstName = "Mehmet",
                 LastName = "Çelik",
                 Email = "mehmet@example.com",
-                IsActive = false
+                IsActive = false, Phone = "1114443322"
             }
         };
 
@@ -75,7 +76,8 @@ public static class DbOperations
             FirstName TEXT NOT NULL,
             LastName TEXT,
             IsActive BYTE,
-            Email TEXT NOT NULL
+            Email TEXT NOT NULL,
+            PhoneNumber TEXT
         );
     ";
         command.ExecuteNonQuery();
