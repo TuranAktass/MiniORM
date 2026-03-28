@@ -11,6 +11,8 @@ SQLitePCL.Batteries.Init();
 var connectionString = "Data Source=miniorm.db";
 
 
-var context = new OrmContext(connectionString, cs => new DbExecutor(cs));
-
+var context = new OrmContext(
+    connectionString,
+    new ConsoleOrmLogger()
+);
 ProjectionTests.Run(context);

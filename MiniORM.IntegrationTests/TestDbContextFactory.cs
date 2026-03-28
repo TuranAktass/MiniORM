@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.Sqlite;
 using MiniORM.Core;
-using MiniORM.Infrastructure;
 using MiniORM.IntegrationTests.Models;
+using MiniORM.Logging;
+
+namespace MiniORM.IntegrationTests;
 
 public abstract class TestDbContextFactory
 {
@@ -14,7 +16,7 @@ public abstract class TestDbContextFactory
 
         var context = new OrmContext(
             connection.ConnectionString,
-            cs => new DbExecutor(connection)
+            new NullORMLogger()
         );
 
         CreateSchema(connection);

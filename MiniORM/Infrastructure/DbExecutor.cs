@@ -12,16 +12,16 @@ public class DbExecutor
     private readonly DbConnection? _connection;
     private readonly IOrmLogger _logger;
 
-    public DbExecutor(string connectionString)
+    public DbExecutor(string connectionString, IOrmLogger? logger)
     {
         _connectionString = connectionString;
-        _logger = new ConsoleOrmLogger();
+        _logger = logger ?? new NullORMLogger();
     }
 
-    public DbExecutor(DbConnection connection)
+    public DbExecutor(DbConnection connection, IOrmLogger? logger)
     {
         _connection = connection;
-        _logger = new ConsoleOrmLogger();
+        _logger = logger ?? new NullORMLogger();
     }
 
     public List<T> Query<T>(string sql, object? parameters = null) where T : new()

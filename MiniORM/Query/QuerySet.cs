@@ -12,16 +12,17 @@ namespace MiniORM.Query;
 public class QuerySet<T> where T : new()
 {
     private readonly string _connectionString;
-    private readonly Func<string, DbExecutor> _executorFactory;
+    private readonly Func<string, IOrmLogger, DbExecutor> _executorFactory;
     private readonly QueryModel _queryModel;
     private readonly QueryContext _parameterContext;
     private readonly IOrmLogger _logger;
 
-    public QuerySet(string connectionString, Func<string, DbExecutor> executorFactory)
+    public QuerySet(string connectionString, Func<string, IOrmLogger, DbExecutor> executorFactory,
+        IOrmLogger logger)
     {
         _connectionString = connectionString;
         _executorFactory = executorFactory;
-        _logger = new ConsoleOrmLogger();
+        _logger = logger;
 
         _parameterContext = new QueryContext();
 
@@ -92,7 +93,7 @@ public class QuerySet<T> where T : new()
         queryModel.Limit = 1;
 
         var sqlResult = SelectQueryBuilder.Build(queryModel);
-        var executor = _executorFactory(_connectionString);
+        var executor = CreateExecutor();
 
         return executor.Query<T>(sqlResult.Sql, sqlResult.Parameters).FirstOrDefault();
     }
@@ -101,7 +102,7 @@ public class QuerySet<T> where T : new()
     {
         var sqlResult = SelectQueryBuilder.Build(_queryModel);
 
-        var executor = _executorFactory(_connectionString);
+        var executor = CreateExecutor();
         return executor.Query<T>(sqlResult.Sql, sqlResult.Parameters);
     }
 
@@ -110,7 +111,7 @@ public class QuerySet<T> where T : new()
         var queryModel = _queryModel.Clone();
         queryModel.Limit = 1;
         var sqlResult = SelectQueryBuilder.Build(queryModel);
-        var executor = _executorFactory(_connectionString);
+        var executor = CreateExecutor();
 
         var result = executor.Query<T>(sqlResult.Sql, sqlResult.Parameters);
         return result.Count != 0;
@@ -122,9 +123,14 @@ public class QuerySet<T> where T : new()
         queryModel.SelectClause = ["COUNT(*)"];
 
         var sqlResult = SelectQueryBuilder.Build(queryModel);
-        var executor = _executorFactory(_connectionString);
+        var executor = CreateExecutor();
         var count = executor.ExecuteScalar<int>(sqlResult.Sql, sqlResult.Parameters);
 
         return count;
+    }
+
+    private DbExecutor CreateExecutor()
+    {
+        return _executorFactory(_connectionString, _logger);
     }
 }
