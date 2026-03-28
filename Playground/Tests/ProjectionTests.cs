@@ -14,7 +14,7 @@ public static class ProjectionTests
         Console.WriteLine("====== RESULTS ======");
         foreach (var item in result)
         {
-            Console.WriteLine(item);
+            Console.WriteLine(item);                    
         }
 
         var userPhoneNumbers = context.Queryable<User>().Select(x => new { x.Id, x.FirstName, x.LastName, x.Phone}).ToList();
