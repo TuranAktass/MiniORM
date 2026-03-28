@@ -68,7 +68,8 @@ public class User
 ```csharp
 var context = new OrmContext(
     connectionString,
-    cs => new DbExecutor(cs));
+    new ConsoleOrmLogger()
+);
 ```
 
 ---

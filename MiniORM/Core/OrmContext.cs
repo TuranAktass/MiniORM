@@ -29,11 +29,7 @@ public class OrmContext
 
     public QuerySet<T> Queryable<T>() where T : new()
     {
-        return new QuerySet<T>(
-            _connectionString,
-            (cs, logger) => new DbExecutor(cs, logger),
-            _logger
-        );
+        return new QuerySet<T>(_connectionString, _executorFactory, _logger);
     }
 
     public List<T> Query<T>(string sql, object? parameters = null) where T : new()
